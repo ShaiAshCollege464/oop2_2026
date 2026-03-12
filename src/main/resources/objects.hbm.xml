@@ -4,6 +4,32 @@
 
 
 <hibernate-mapping>
+    <class name="com.ashcollege.entities.User" table="users">
+        <id name="id" column="id" type="long">
+            <generator class="identity"/>
+        </id>
+        <property name="username" column="username" type="text" not-null="true"/>
+        <property name="password" column="password" type="string"/>
+        <property name="roleType" column="role_type" type="string"/>
+    </class>
 
+    <class name="com.ashcollege.entities.WorkPlace" table="work_places">
+        <id name="id" column="id" type="long">
+            <generator class="identity"/>
+        </id>
+        <property name="name" column="name" type="text"/>
+        <property name="since" column="since" type="int"/>
+    </class>
+
+    <class name="com.ashcollege.entities.Note" table="notes">
+        <id name="id" column="id" type="long">
+            <generator class="identity"/>
+        </id>
+        <property name="text" column="text" type="string"/>
+        <many-to-one
+                name="writer"
+                column="writer_id"
+                class="com.ashcollege.entities.User"/>
+    </class>
 
 </hibernate-mapping>

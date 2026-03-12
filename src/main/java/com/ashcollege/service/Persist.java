@@ -1,6 +1,9 @@
 package com.ashcollege.service;
 
 
+import com.ashcollege.entities.Note;
+import com.ashcollege.entities.User;
+import com.ashcollege.entities.WorkPlace;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,14 +48,28 @@ public class Persist {
         this.sessionFactory.getCurrentSession().saveOrUpdate(object);
     }
 
-    public <T> T loadObject(Class<T> clazz, int oid) {
+    public <T> T loadObject(Class<T> clazz, long oid) {
         return this.getQuerySession().get(clazz, oid);
     }
 
-    public <T> List<T> loadList(Class<T> clazz)
-    {
+    public <T> List<T> loadList(Class<T> clazz) {
         return this.sessionFactory.getCurrentSession()
                 .createQuery("FROM " + clazz.getSimpleName()).list();
+    }
+
+    public List<User> getUserByUsernameAndPassword(String username, String password) {
+        return this.sessionFactory.getCurrentSession()
+                .createQuery("FROM User WHERE username = :username AND password = :password", User.class)
+                .setParameter("username", username)
+                .setParameter("password", password)
+                .list();
+    }
+
+    public List<Note> getNotesByUsername(String username) {
+        return this.sessionFactory.getCurrentSession()
+                .createQuery("FROM Note WHERE writer.username = :username", Note.class)
+                .setParameter("username", username)
+                .getResultList();
     }
 
 
