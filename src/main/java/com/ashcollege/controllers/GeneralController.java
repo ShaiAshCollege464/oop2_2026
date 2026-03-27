@@ -17,8 +17,6 @@ public class GeneralController {
 
     @PostConstruct
     public void init() {
-        Note note = persist.loadObject(Note.class, 1);
-        System.out.println(note.getWriter().getUsername());
     }
 
     @RequestMapping ("/get-user-by-id")
